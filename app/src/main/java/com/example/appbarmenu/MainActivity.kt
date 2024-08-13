@@ -27,16 +27,23 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.appbarmenu.ui.theme.AppBarMenuTheme
 import androidx.compose.ui.Alignment
 
+@OptIn(ExperimentalMaterial3Api::class)
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
             AppBarMenuTheme {
-                Scaffold(modifier = Modifier.fillMaxSize(),
-                    topBar = { MyAppBarWithMenu() }
+                Scaffold(
+                    /*topBar = {
+                        TopAppBar(
+                            title = { Text("Authentication") }
+                        )
+                    }*/
+
                 ) { innerPadding ->
-                    Greeting(name = "Android", modifier = Modifier.padding(innerPadding))
+                    MyAppBarWithMenu(modifier = Modifier.padding(innerPadding))
+                //Greeting(name = "Android", modifier = Modifier.padding(innerPadding))
                 }
             }
         }
@@ -50,6 +57,7 @@ fun MyAppBarWithMenu(modifier: Modifier = Modifier) {
     var expanded by remember { mutableStateOf(false) }
 
     Box(/*modifier = modifier.fillMaxSize()*/
+        modifier = modifier,
         contentAlignment = Alignment.Center
     ) {
         TopAppBar(
@@ -64,9 +72,6 @@ fun MyAppBarWithMenu(modifier: Modifier = Modifier) {
                 DropdownMenu(
                     expanded = expanded,
                     onDismissRequest = { expanded = false },
-                    //modifier = modifier.align(Alignment.TopEnd
-
-                    // TODO should align TopEnd but is Right aligned
                 ) {
                     DropdownMenuItem(text = { Text("Option 1") },
                         onClick = { /* Handle click */
@@ -80,16 +85,6 @@ fun MyAppBarWithMenu(modifier: Modifier = Modifier) {
                 }
             }
         )
-        /*DropdownMenu(
-            expanded = expanded,
-            onDismissRequest = { expanded = false },
-            modifier = modifier.align(Alignment.TopEnd)
-            // TODO should align TopEnd but is Right aligned
-        ) {
-            DropdownMenuItem(text = { Text("Option 1") }, onClick = { /* Handle click */ })
-            DropdownMenuItem(text = { Text("Option 2") }, onClick = { /* Handle click */ })
-            // Add more options as needed
-        }*/
     }
 }
 
